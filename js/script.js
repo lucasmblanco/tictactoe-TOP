@@ -129,8 +129,13 @@ const players = function (name, symbol) {
 
 const gameFlow = function () {
 
-    const winnersIndex = [[0,1,2], [0,3,6], [0,4,8], [1,4,7], [2,5,8],[2,4,6], [3,4,5], [6,7,8]]
+    const comboX = [];
+    const comboO = [];
 
+    let temporalIndex = [];
+
+    //const winnersIndex = [[0,1,2], [0,3,6], [0,4,8], [1,4,7], [2,5,8],[2,4,6], [3,4,5], [6,7,8]]
+    const winnersIndex = ['012', '036', '048', '147', '258', '246', '345', '678'];
   /*
     function checkIfXOrOisWinning(arrayGameStatus, letter) { 
         let winCombo = [];
@@ -141,10 +146,6 @@ const gameFlow = function () {
 
 */
 
-      function winVingilante(arrayCombo) {
-        let result = winnersIndex.every(element => element.includes(arrayCombo));
-        return result;
-      }
 
 
 
@@ -153,36 +154,44 @@ const gameFlow = function () {
 
       function checkGameStatus() {
         
-        let estadoDelJuego;
+         comboO.length = 0;
+         comboX.length = 0;  
+         
 
-        let comboX = [];
-        let comboO = [];    
 
         let gameStatus = [];
         gameBoard.tilesContent.forEach( tile => gameStatus.push(tile.textContent));
         for( let i = 0; i < gameStatus.length; i++) {
             if(gameStatus[i] === 'X') {
                 comboX.push(i);
+                comboX.sort()
             }
             else if(gameStatus[i] === 'O') {
                 comboO.push(i);
+                comboO.sort();
             }
         }
 
-       let ganaX = winVingilante(comboX);
-       let ganaO = winVingilante(comboO);
+       
 
-       if(ganaX) {
-           estadoDelJuego = 'Fin del Juego, Victoria';
-       }
-
-       return {ganaX, ganaO, estadoDelJuego, comboX, comboO}
+       //return { comboX, comboO }
 
        }
         
 
+       // NO COMPARA ARRAYS DE MAS DE 3 ELEMENTOS 
 
+       let testArray = [];
 
+       function checkWinStatus() {
+        let estado; 
+        for(let i = 0; i < winnersIndex.length; i++) {
+            if(winnersIndex[i] === comboX.join("")) {
+                estado = 'funciona';
+           }   
+          }
+        console.log(estado);
+       }
 
 
 
@@ -320,7 +329,8 @@ const gameFlow = function () {
         if(e.target.classList.contains('playerTwo')) return;
         e.target.textContent = startGame.newPlayerOne.symbol;
         e.target.classList.add('playerOne');
-        checkGameStatus();
+       // checkGameStatus();
+        // checkWinStatus();
     }
 
 
@@ -333,14 +343,15 @@ const gameFlow = function () {
     if(e.target.classList.contains('playerOne')) return;
      e.target.textContent = startGame.newPlayerTwo.symbol;
      e.target.classList.add('playerTwo');
-     checkGameStatus();
+    // checkGameStatus();
+    // checkWinStatus();
     }
     
 
     
 
 
-    return { playerOnePlays, playerTwoPlays,checkGameStatus, winVingilante  }
+    return { playerOnePlays, playerTwoPlays,checkGameStatus, checkWinStatus, comboO, comboX, temporalIndex }
 
 }();
 
