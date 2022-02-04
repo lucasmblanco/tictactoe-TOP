@@ -1,7 +1,13 @@
 .board {
     width: 100%;
     height: 100px;
-    background-color: white;
+    background-color: #f72d8b;
+    font-size: 40px;
+    color: white;
+    font-family: 'Fugaz One', cursive;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 20px;
 }
 
 #boardArea {
@@ -12,3 +18,164 @@
     margin: 20px auto;
     grid-gap: 5px;
 }
+
+.playerOneColor {
+    background-color: #A11958 !important;
+    color: white;
+}
+
+.playerTwoColor {
+    background-color:#015f3a !important;
+    color: white ;
+}
+
+#startButtonArea {
+    display: flex;
+    justify-content: center;
+}
+
+button.startButton {
+    background-color:  #00f0a4 ;
+    border: none;
+    color: white;
+    font-family: 'Fugaz One', cursive;
+    font-size: 40px;
+    width: 300px;
+    height: 60px;
+    border-radius: 20px 20px 50px 50px;
+}
+
+#adversaryDiv {
+    background-color: #00f0a4 ;
+    width: 250px;
+    height: 100px;
+    margin: 5px auto;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.choiseDiv {
+    width: 60%;
+    height: 70px;
+    background-color: white ;
+    margin: auto;
+    border-radius: 20px;
+    color: #f72d8b;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    line-height: 70px;
+    font-size: 25px;
+    border: none;
+}
+
+#containerForm {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    height: 100%;
+}
+
+#playersInfo {
+    height: 100%;
+}
+
+.containerInputs {
+    height: 25px;
+    line-height: 35px;
+    font-size: 10px;
+}
+
+#namePlayerOne {
+    margin: 5px;
+    color: #A11958;
+    text-align: center;
+}
+
+#namePlayerTwo {
+    margin: 5px;
+    color:  #015f3a  ;
+    text-align: center;
+}
+
+.nameField {
+    background-color: #00f0a4 ;
+    border: none;
+    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.labelName {
+    padding-left: 10px;
+    color: #f72d8b;
+}
+
+#submitButton {
+    width: 90%;
+    background-color:#00f0a4;
+    color: white;
+    border: none;
+    font-family: 'Fugaz One', cursive;
+    font-size: 25px;
+    border-radius: 20px;
+    height: 50px;
+}
+
+#cancelButtonArea {
+    display: flex;
+    justify-content: center;
+}
+
+#cancelButton {
+    width: 40px;
+    border-radius: 50% 50% 100px 100px;
+    background-color: #fc2559 ;
+    color: white;
+    font-family: 'Fugaz One', cursive;
+    border: none;
+}
+
+.material-icons-outlined {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;  /* Preferred icon size */
+    display: inline-block;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+  
+
+  .playerPlates { 
+    background-color:  black;
+    border: none;
+    color: white;
+    font-family: 'Fugaz One', cursive;
+    font-size: 20px;
+    width: 300px;
+    height: 60px;
+    border-radius: 50px 50px 20px 20px;
+    text-align: center;
+    line-height: 60px;
+  }
+
+  #playerOnePlate {
+      background-color: #A11958;
+  }
+
+  #playerTwoPlate {
+      background-color:#015f3a;
+  }

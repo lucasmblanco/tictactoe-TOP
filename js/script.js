@@ -1,5 +1,5 @@
 const startGame = (function () {
-    const playButton = document.querySelector('.playButton');
+    const playButton = document.querySelector('.startButton');
 
     const newPlayerOne = {};
     const newPlayerTwo = {};
@@ -13,10 +13,15 @@ const startGame = (function () {
 
     function promptPlayers() {
 
+        const adversaryDiv = document.querySelector('#adversaryDiv');
+        adversaryDiv.textContent = "";
         const containerForm = document.createElement('div');
         containerForm.setAttribute('id', 'containerForm');
-        document.body.insertBefore(containerForm, boardArea);
-
+        //document.body.insertBefore(containerForm, boardArea);
+        //document.body.append(containerForm);
+        adversaryDiv.style.gridTemplateColumns = '1fr';
+        adversaryDiv.appendChild(containerForm);
+        
 
         const form = document.createElement('form');
         form.setAttribute('id', 'playersInfo');
@@ -28,12 +33,15 @@ const startGame = (function () {
 
         const labelNamePlayerOne = document.createElement('label');
         labelNamePlayerOne.setAttribute('for', 'namePlayerOne');
-        labelNamePlayerOne.textContent = 'Name Player One';
+        labelNamePlayerOne.setAttribute('class', 'labelName');
+        labelNamePlayerOne.textContent = 'P1';
         containerNamePlayerOne.appendChild(labelNamePlayerOne); 
 
         const namePlayerOne = document.createElement('input');
         namePlayerOne.setAttribute('id', 'namePlayerOne');
+        namePlayerOne.setAttribute('class', 'nameField');
         namePlayerOne.setAttribute('type', 'text');
+        namePlayerOne.setAttribute('placeholder', 'ENTER PLAYER NAME')
         containerNamePlayerOne.appendChild(namePlayerOne);
         //const playerOne = namePlayerOne.value;
         //const namePlayerOne = playerOne.value;
@@ -44,12 +52,15 @@ const startGame = (function () {
 
         const labelNamePlayerTwo = document.createElement('label');
         labelNamePlayerTwo.setAttribute('for', 'namePlayerTwo');
-        labelNamePlayerTwo.textContent = 'Name Player Two';
+        labelNamePlayerTwo.setAttribute('class', 'labelName');
+        labelNamePlayerTwo.textContent = 'P2';
         containerNamePlayerTwo.appendChild(labelNamePlayerTwo); 
 
         const namePlayerTwo = document.createElement('input');
         namePlayerTwo.setAttribute('id', 'namePlayerTwo');
+        namePlayerTwo.setAttribute('class', 'nameField');
         namePlayerTwo.setAttribute('type', 'text');
+        namePlayerTwo.setAttribute('placeholder', 'ENTER PLAYER NAME')
         containerNamePlayerTwo.appendChild(namePlayerTwo);
         //const playerTwo = namePlayerTwo.value;
         //const namePlayerTwo = playerTwo.value;
@@ -61,9 +72,29 @@ const startGame = (function () {
 
         const submitButton = document.createElement('input');
         submitButton.setAttribute('type', 'submit');
+        submitButton.setAttribute('id', 'submitButton');
+        submitButton.value = 'PLAY'; 
         submitButtonContainer.appendChild(submitButton);
-        submitButton.textContent = 'Start!'; 
         
+
+        const cancelButtonArea = document.createElement('div');
+        cancelButtonArea.setAttribute('id', 'cancelButtonArea');
+        document.body.append(cancelButtonArea);
+
+        const cancelButton = document.createElement('button');
+        cancelButton.setAttribute('type', 'button');
+        cancelButton.setAttribute('id', 'cancelButton');
+        cancelButton.innerHTML = '<span class="material-icons-outlined">highlight_off</span>';
+        cancelButtonArea.appendChild(cancelButton);
+        cancelButton.addEventListener('click', closeAdversaryDiv);
+
+        function closeAdversaryDiv() {
+            adversaryDiv.remove();
+            cancelButton.remove();
+        }
+
+
+
         form.addEventListener('submit', submitPlayerInfo)
 
         function submitPlayerInfo(e) { 
@@ -74,19 +105,43 @@ const startGame = (function () {
                startGame.newPlayerOne = players(namePlayerOne.value, 'X');
                startGame.newPlayerTwo = players(namePlayerTwo.value, 'O');
                gameBoard.boardConstruction();
-                //return { newPlayerOne, newPlayerTwo }
+               gameBoard.playersPlate();
+               adversaryDiv.remove();
+               cancelButton.remove();
+               gameFlow.playerOnePlays();
         }
 }
 
 
 
-    function iniatiateGame() {
-        playButton.addEventListener('click' , promptPlayers)
+        function iniatiateGame() {
+        playButton.addEventListener('click' , chooseAdversary)
     }
 
-    function displayBoard() {
+        function displayBoard() {
         gameBoard.boardConstruction(); 
     }
+
+
+    function chooseAdversary() { 
+        const adversaryDiv = document.createElement('div');
+        adversaryDiv.setAttribute('id', 'adversaryDiv');
+        document.body.append(adversaryDiv);
+
+        const vsChoise = document.createElement('button');
+        vsChoise.setAttribute('class', 'choiseDiv');
+        vsChoise.textContent = 'VS';
+        vsChoise.addEventListener('click', promptPlayers);
+        adversaryDiv.appendChild(vsChoise);
+        
+
+        const vsIa = document.createElement('button');
+        vsIa.setAttribute('class', 'choiseDiv');
+        vsIa.textContent = 'IA';
+        adversaryDiv.appendChild(vsIa);
+        
+    }
+
     return { iniatiateGame, newPlayerOne, newPlayerTwo, creatingBoardArea  }
 })();
 
@@ -97,6 +152,8 @@ const gameBoard = (function () {
     
     const tilesContent = []; 
 
+
+    /*
     function boardConstruction() {
     const boardArea = document.querySelector('#boardArea');
      for(let i = 0; i < 9; i++) {
@@ -107,8 +164,38 @@ const gameBoard = (function () {
         tilesContent.push(board);
         }
     }
+*/
+    function boardConstruction() {
+       // const boardArea = document.querySelector('#boardArea')
+        const board = document.querySelectorAll('.board')
+        board.forEach(tile => {
+            tile.textContent = '';
+            tile.style.backgroundColor = 'black';
+            tilesContent.push(tile);
+        });
+        
+    }
 
-    return { boardConstruction, tilesContent } 
+
+    function playersPlate() {
+        const startButtonArea = document.querySelector('#startButtonArea');
+        const startButtonDiv = document.querySelector('#startButtonDiv');
+
+        const playerOnePlate = document.createElement('div');
+        playerOnePlate.setAttribute('id', 'playerOnePlate');
+        playerOnePlate.setAttribute('class', 'playerPlates');
+        playerOnePlate.textContent = namePlayerOne.value;
+        startButtonArea.insertBefore(playerOnePlate, startButtonDiv);
+    
+        const playerTwoPlate = document.createElement('div');
+        playerTwoPlate.setAttribute('id', 'playerTwoPlate');
+        playerTwoPlate.setAttribute('class', 'playerPlates');
+        playerTwoPlate.textContent = namePlayerTwo.value;
+        startButtonArea.appendChild(playerTwoPlate);
+    }
+
+
+    return { boardConstruction, tilesContent, playersPlate } 
     
 })();
 
@@ -329,8 +416,10 @@ const gameFlow = function () {
         if(e.target.classList.contains('playerTwo')) return;
         e.target.textContent = startGame.newPlayerOne.symbol;
         e.target.classList.add('playerOne');
-       // checkGameStatus();
-        // checkWinStatus();
+        e.target.classList.add('playerOneColor');
+        checkGameStatus();
+        checkWinStatus();
+        playerTwoPlays();
     }
 
 
@@ -343,8 +432,10 @@ const gameFlow = function () {
     if(e.target.classList.contains('playerOne')) return;
      e.target.textContent = startGame.newPlayerTwo.symbol;
      e.target.classList.add('playerTwo');
-    // checkGameStatus();
-    // checkWinStatus();
+     e.target.classList.add('playerTwoColor');
+        checkGameStatus();
+        checkWinStatus();
+        playerOnePlays();
     }
     
 
