@@ -99,7 +99,7 @@ const startGame = (function () {
 
         function submitPlayerInfo(e) { 
             e.preventDefault();
-            console.log(namePlayerOne.value);
+            //console.log(namePlayerOne.value);
             //const playerOne = namePlayerOne.value;
             //const playerTwo = namePlayerTwo.value;
                startGame.newPlayerOne = players(namePlayerOne.value, 'X');
@@ -219,33 +219,26 @@ const gameFlow = function () {
     const comboX = [];
     const comboO = [];
 
-    let temporalIndex = [];
-
-    //const winnersIndex = [[0,1,2], [0,3,6], [0,4,8], [1,4,7], [2,5,8],[2,4,6], [3,4,5], [6,7,8]]
-    const winnersIndex = ['012', '036', '048', '147', '258', '246', '345', '678'];
-  /*
-    function checkIfXOrOisWinning(arrayGameStatus, letter) { 
-        let winCombo = [];
-        for(let i = 0; i < arrayGameStatus.length; i++) { 
-            if(letter === arrayGameStatus[i]) winCombo.push(i)} 
-            return winCombo;
-      }
-
-*/
 
 
-
-
-
-
+//const winnersIndex = ['012', '036', '048', '147', '258', '246', '345', '678'];
+      
+    const winnersIndex = [
+      [0,1,2], 
+      [0,3,6], 
+      [0,4,8], 
+      [1,4,7], 
+      [2,5,8],
+      [2,4,6], 
+      [3,4,5], 
+      [6,7,8]
+    ]
 
       function checkGameStatus() {
         
          comboO.length = 0;
          comboX.length = 0;  
-         
-
-
+    
         let gameStatus = [];
         gameBoard.tilesContent.forEach( tile => gameStatus.push(tile.textContent));
         for( let i = 0; i < gameStatus.length; i++) {
@@ -259,49 +252,45 @@ const gameFlow = function () {
             }
         }
 
-       
+    }
 
-       //return { comboX, comboO }
 
-       }
-        
+    function checkWinStatus() {
 
-       // NO COMPARA ARRAYS DE MAS DE 3 ELEMENTOS 
+    let combinationX = winnersIndex.map(index => index.filter(position => comboX.includes(position)));
+    let combinationO = winnersIndex.map(index => index.filter(position => comboO.includes(position)));
 
-       let testArray = [];
+     for( let i of combinationX) {
+         if( i.length === 3) {
+             console.log('gano x');
+         }
+     }
 
-       function checkWinStatus() {
+     for(let i of combinationO) {
+        if( i.length === 3) {
+            console.log('gano o');
+        }
+     }
+        /*
         let estado; 
+        
         for(let i = 0; i < winnersIndex.length; i++) {
-            if(winnersIndex[i] === comboX.join("")) {
-                estado = 'funciona';
-           }   
+            console.log(winnersIndex[i]);
+           if(winnersIndex[i] === comboX.join("")) {
+                estado = 'gano X';
+           } else if(winnersIndex[i] === comboO.join("")){
+               estado = 'gano O';
+           }
           }
         console.log(estado);
-       }
-
-
-
-
-        /*
-        for(let i = 0; i < winnersIndex.length; i++) {
-            if (JSON.stringify(containerWinCombo) === JSON.stringify(winnersIndex[i])) {
-                finalDecision = 'Ganador X';
-            }
-            else {
-                finalDecision = 'Todavia no';
-            }
-        }
         */
+    }
+       
+
  
+ 
+/* -------------- ALTERNATIVA QUE FUNCIONA -------------
 
-    
-
-
-
-
-
-/* FUNCIONAAAA
     function checkGameStatus() {
         let gameStatus = [];
         gameBoard.tilesContent.forEach( tile => gameStatus.push(tile.textContent));
@@ -354,11 +343,10 @@ const gameFlow = function () {
             console.log('No');
         }
     }
+-------------------------------------------------------------*/
 
-*/
 
-
-/*
+/*  
     function testeandoXGana(array) {
         switch('X') {
             case array[0] && array[1] && array[2]:
@@ -418,7 +406,7 @@ const gameFlow = function () {
         e.target.classList.add('playerOne');
         e.target.classList.add('playerOneColor');
         checkGameStatus();
-        checkWinStatus();
+        checkWinStatus()
         playerTwoPlays();
     }
 
@@ -442,25 +430,6 @@ const gameFlow = function () {
     
 
 
-    return { playerOnePlays, playerTwoPlays,checkGameStatus, checkWinStatus, comboO, comboX, temporalIndex }
+    return { playerOnePlays, playerTwoPlays,checkGameStatus, comboO, comboX}
 
 }();
-
-
-/*
-
-tilesContent.push(board);
-        board.addEventListener('click', test)
-
-function test(e) {
-    
-            e.target.textContent = startGame.newPlayerOne.symbol;
-            const activeEventListener = document.querySelector('.board');
-            activeEventListener.removeEventListener('click', test);
-            activeEventListener.addEventListener('click', testTwo);
-          }
-      
-function testTwo(e) {
-              e.target.textContent = startGame.newPlayerTwo.symbol;
-          }
-          */
