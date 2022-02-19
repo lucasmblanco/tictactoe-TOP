@@ -12,6 +12,11 @@ const startGame = (function () {
 
 
     function promptPlayers() {
+        const startButtonText = document.querySelector('.startButton');
+        startButtonText.textContent = 'ENTER PLAYERS NAME'; 
+        startButtonText.style.fontSize = '20px';
+        startButtonText.style.color = '#BB86FC';
+      
 
         const adversaryDiv = document.querySelector('#adversaryDiv');
         adversaryDiv.textContent = "";
@@ -42,6 +47,8 @@ const startGame = (function () {
         namePlayerOne.setAttribute('class', 'nameField');
         namePlayerOne.setAttribute('type', 'text');
         namePlayerOne.setAttribute('placeholder', 'ENTER PLAYER NAME')
+        namePlayerOne.setAttribute('maxLength', '8');
+        namePlayerOne.required = true;
         containerNamePlayerOne.appendChild(namePlayerOne);
         //const playerOne = namePlayerOne.value;
         //const namePlayerOne = playerOne.value;
@@ -61,6 +68,8 @@ const startGame = (function () {
         namePlayerTwo.setAttribute('class', 'nameField');
         namePlayerTwo.setAttribute('type', 'text');
         namePlayerTwo.setAttribute('placeholder', 'ENTER PLAYER NAME')
+        namePlayerTwo.setAttribute('maxLength', '8');
+        namePlayerTwo.required = true;
         containerNamePlayerTwo.appendChild(namePlayerTwo);
         //const playerTwo = namePlayerTwo.value;
         //const namePlayerTwo = playerTwo.value;
@@ -97,18 +106,24 @@ const startGame = (function () {
 
         form.addEventListener('submit', submitPlayerInfo)
 
-        function submitPlayerInfo(e) { 
+        function submitPlayerInfo(e) {
             e.preventDefault();
-            //console.log(namePlayerOne.value);
-            //const playerOne = namePlayerOne.value;
-            //const playerTwo = namePlayerTwo.value;
-               startGame.newPlayerOne = players(namePlayerOne.value, 'X');
-               startGame.newPlayerTwo = players(namePlayerTwo.value, 'O');
+               startGame.newPlayerOne = players(namePlayerOne.value.toUpperCase(), 'X');
+               startGame.newPlayerTwo = players(namePlayerTwo.value.toUpperCase(), 'O');
+               
+
+               const startButtonText = document.querySelector('.startButton');
+               startButtonText.textContent = `${startGame.newPlayerOne.name} IS PLAYING`; 
+               startButtonText.style.fontSize = '20px';
+               startButtonText.style.color = '#BB86FC';
+
                gameBoard.boardConstruction();
                gameBoard.playersPlate();
                adversaryDiv.remove();
                cancelButton.remove();
                gameFlow.playerOnePlays();
+
+
         }
 }
 
@@ -118,12 +133,19 @@ const startGame = (function () {
         playButton.addEventListener('click' , chooseAdversary)
     }
 
-        function displayBoard() {
-        gameBoard.boardConstruction(); 
-    }
 
 
     function chooseAdversary() { 
+
+        const playButton = document.querySelector('.startButton');
+        playButton.removeEventListener('click', chooseAdversary);
+
+        const startButtonText = document.querySelector('.startButton');
+        startButtonText.textContent = 'CHOOSE MODE'; 
+        startButtonText.style.fontSize = '30px';
+        startButtonText.style.color = '#BB86FC';
+    
+
         const adversaryDiv = document.createElement('div');
         adversaryDiv.setAttribute('id', 'adversaryDiv');
         document.body.append(adversaryDiv);
@@ -166,14 +188,13 @@ const gameBoard = (function () {
     }
 */
     function boardConstruction() {
-       // const boardArea = document.querySelector('#boardArea')
+        tilesContent.length = 0;
         const board = document.querySelectorAll('.board')
         board.forEach(tile => {
             tile.textContent = '';
-            tile.style.backgroundColor = 'black';
+            tile.style.backgroundColor = '#BB86FC';
             tilesContent.push(tile);
-        });
-        
+        })
     }
 
 
@@ -184,13 +205,13 @@ const gameBoard = (function () {
         const playerOnePlate = document.createElement('div');
         playerOnePlate.setAttribute('id', 'playerOnePlate');
         playerOnePlate.setAttribute('class', 'playerPlates');
-        playerOnePlate.textContent = namePlayerOne.value;
+        playerOnePlate.textContent = `${startGame.newPlayerOne.name}`;
         startButtonArea.insertBefore(playerOnePlate, startButtonDiv);
     
         const playerTwoPlate = document.createElement('div');
         playerTwoPlate.setAttribute('id', 'playerTwoPlate');
         playerTwoPlate.setAttribute('class', 'playerPlates');
-        playerTwoPlate.textContent = namePlayerTwo.value;
+        playerTwoPlate.textContent = `${startGame.newPlayerTwo.name}`;
         startButtonArea.appendChild(playerTwoPlate);
     }
 
@@ -219,9 +240,8 @@ const gameFlow = function () {
     const comboX = [];
     const comboO = [];
 
-
-
-//const winnersIndex = ['012', '036', '048', '147', '258', '246', '345', '678'];
+    const tieArray = []; 
+    const checkingBoardArea = document.querySelector('#boardArea');
       
     const winnersIndex = [
       [0,1,2], 
@@ -257,36 +277,70 @@ const gameFlow = function () {
 
     function checkWinStatus() {
 
-    let combinationX = winnersIndex.map(index => index.filter(position => comboX.includes(position)));
-    let combinationO = winnersIndex.map(index => index.filter(position => comboO.includes(position)));
+        let combinationX = winnersIndex.map(index => index.filter(position => comboX.includes(position)));
+        let combinationO = winnersIndex.map(index => index.filter(position => comboO.includes(position)));
 
-     for( let i of combinationX) {
+        for( let i of combinationX ) {
          if( i.length === 3) {
-             console.log('gano x');
+            const boardArea = document.querySelector('#boardArea');
+            boardArea.textContent = ''; 
+            const winnerArea = document.createElement('div');
+            const lineOne = document.createElement('div');
+            const lineTwo = document.createElement('div'); 
+            winnerArea.setAttribute('id', 'winnerArea');;
+            lineOne.setAttribute('id', 'lineOne');
+            lineTwo.setAttribute('id', 'lineTwo');
+            lineOne.textContent = 'THE WINNER IS';
+            lineTwo.textContent = `${startGame.newPlayerOne.name}`;  
+            boardArea.appendChild(winnerArea);
+            winnerArea.appendChild(lineOne);
+            winnerArea.appendChild(lineTwo);
+
+
+
+            const startButtonText = document.querySelector('.startButton');
+            startButtonText.textContent = '(─‿‿─)'; 
+            startButtonText.style.fontSize = '20px';
+            startButtonText.style.color = 'white';
+
+            restartButton();
+            newGame();
          }
      }
 
-     for(let i of combinationO) {
-        if( i.length === 3) {
-            console.log('gano o');
-        }
-     }
-        /*
-        let estado; 
+        for(let i of combinationO) {
+         if( i.length === 3) {
+            const boardArea = document.querySelector('#boardArea');
+            boardArea.textContent = ''; 
+            const winnerArea = document.createElement('div');
+            const lineOne = document.createElement('div');
+            const lineTwo = document.createElement('div'); 
+            winnerArea.setAttribute('id', 'winnerArea');
         
-        for(let i = 0; i < winnersIndex.length; i++) {
-            console.log(winnersIndex[i]);
-           if(winnersIndex[i] === comboX.join("")) {
-                estado = 'gano X';
-           } else if(winnersIndex[i] === comboO.join("")){
-               estado = 'gano O';
-           }
-          }
-        console.log(estado);
-        */
-    }
-       
+            lineOne.setAttribute('id', 'lineOne');
+            lineTwo.setAttribute('id', 'lineTwo');
+            lineOne.textContent = 'THE WINNER IS';
+            lineTwo.textContent = `${startGame.newPlayerTwo.name}`;  
+            boardArea.appendChild(winnerArea);
+          
+            winnerArea.appendChild(lineOne);
+            winnerArea.appendChild(lineTwo);
 
+            const startButtonText = document.querySelector('.startButton');
+            startButtonText.textContent = '(─‿‿─)'; 
+            startButtonText.style.fontSize = '20px';
+            startButtonText.style.color = 'white';
+
+            restartButton();
+            newGame();
+        }
+      }
+    }
+
+    
+
+       
+        
  
  
 /* -------------- ALTERNATIVA QUE FUNCIONA -------------
@@ -401,13 +455,26 @@ const gameFlow = function () {
     }
 
     function playerOneSymbol(e) {
+
+        const startButtonText = document.querySelector('.startButton');
+        startButtonText.textContent = `${startGame.newPlayerTwo.name} IS PLAYING`; 
+        startButtonText.style.fontSize = '20px';
+        startButtonText.style.color = '#BB86FC';
+
         if(e.target.classList.contains('playerTwo')) return;
         e.target.textContent = startGame.newPlayerOne.symbol;
         e.target.classList.add('playerOne');
         e.target.classList.add('playerOneColor');
+
+        tieArray.push('X'); 
         checkGameStatus();
         checkWinStatus()
         playerTwoPlays();
+
+        if( tieArray.length === 9 && checkingBoardArea.childElementCount === 9) {
+            tieTest();        
+    }
+        
     }
 
 
@@ -417,19 +484,111 @@ const gameFlow = function () {
     }
 
     function playerTwoSymbol(e){
-    if(e.target.classList.contains('playerOne')) return;
-     e.target.textContent = startGame.newPlayerTwo.symbol;
-     e.target.classList.add('playerTwo');
-     e.target.classList.add('playerTwoColor');
+        const startButtonText = document.querySelector('.startButton');
+        startButtonText.textContent = `${startGame.newPlayerOne.name} IS PLAYING`; 
+        startButtonText.style.fontSize = '20px';
+        startButtonText.style.color = '#BB86FC ';
+
+        if(e.target.classList.contains('playerOne')) return;
+        e.target.textContent = startGame.newPlayerTwo.symbol;
+        e.target.classList.add('playerTwo');
+         e.target.classList.add('playerTwoColor');
+        
+        tieArray.push('O'); 
         checkGameStatus();
         checkWinStatus();
         playerOnePlays();
     }
     
 
+    function tieTest() {
+
+        tieArray.length = 0;
+
+        checkingBoardArea.textContent = ''; 
+        const winnerArea = document.createElement('div');
+        const lineOne = document.createElement('div');
+      
+        winnerArea.setAttribute('id', 'winnerArea');
+        lineOne.setAttribute('id', 'lineOneTie');
+
+        lineOne.textContent = 'IS A TIE';
+      
+
+
+        checkingBoardArea.appendChild(winnerArea);
+        winnerArea.appendChild(lineOne);
     
 
+        const startButtonText = document.querySelector('.startButton');
+        startButtonText.textContent = '(︶︹︺)'; 
+        startButtonText.style.fontSize = '20px';
+        startButtonText.style.color = 'white'; 
 
+        restartButton();
+        newGame();
+    }
+
+
+    function restartButton() {
+
+        const winnerArea = document.querySelector('#winnerArea');
+
+        tieArray.length = 0;
+
+        const restartButtonDiv = document.createElement('div');
+        const restartButton = document.createElement('button');
+
+        restartButtonDiv.setAttribute('id', 'restartButtonDiv');
+        restartButton.setAttribute('id', 'restartButton');
+
+        restartButton.textContent = 'PLAY AGAIN?';
+
+        winnerArea.appendChild(restartButtonDiv);
+        restartButtonDiv.appendChild(restartButton);
+
+        restartButton.addEventListener('click', restartGame)
+
+        function restartGame() {
+
+            const boardArea = document.querySelector('#boardArea');
+            boardArea.textContent = '';
+            for(let i = 0; i < 9; i++) {
+                const board = document.createElement('div');
+                board.setAttribute('class', 'board');
+                boardArea.appendChild(board);
+            }
+            gameBoard.boardConstruction();
+            gameFlow.playerOnePlays();
+        }
+
+    }
+
+    function newGame() {
+        const winnerArea = document.querySelector('#winnerArea');
+
+        tieArray.length = 0;
+
+        const newGameButtonDiv = document.createElement('div');
+        const newGameButton = document.createElement('button');
+
+        newGameButtonDiv.setAttribute('id', 'newGameButtonDiv');
+        newGameButton.setAttribute('id', 'newGameButton');
+
+        newGameButton.textContent = 'NEW GAME';
+
+        winnerArea.appendChild(newGameButtonDiv);
+        newGameButtonDiv.appendChild(newGameButton);
+
+        newGameButton.addEventListener('click', restarAll)
+
+        function restarAll() {
+            window.location.reload();
+        }
+    }
     return { playerOnePlays, playerTwoPlays,checkGameStatus, comboO, comboX}
 
 }();
+
+
+window.onload = startGame.iniatiateGame();

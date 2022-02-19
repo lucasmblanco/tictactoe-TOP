@@ -1,9 +1,14 @@
+body {
+    background-color: #121212;
+}
+
+
 .board {
     width: 100%;
     height: 100px;
-    background-color: #f72d8b;
+    background-color: #6200EE;
     font-size: 40px;
-    color: white;
+    color: #BB86FC;
     font-family: 'Fugaz One', cursive;
     text-align: center;
     line-height: 100px;
@@ -20,12 +25,12 @@
 }
 
 .playerOneColor {
-    background-color: #A11958 !important;
+    background-color: #fa7100 !important;
     color: white;
 }
 
 .playerTwoColor {
-    background-color:#015f3a !important;
+    background-color:#fbc10f !important;
     color: white ;
 }
 
@@ -35,7 +40,7 @@
 }
 
 button.startButton {
-    background-color:  #00f0a4 ;
+    background-color:  #3700B3;
     border: none;
     color: white;
     font-family: 'Fugaz One', cursive;
@@ -46,7 +51,7 @@ button.startButton {
 }
 
 #adversaryDiv {
-    background-color: #00f0a4 ;
+    background-color: #BB86FC;
     width: 250px;
     height: 100px;
     margin: 5px auto;
@@ -87,18 +92,18 @@ button.startButton {
 
 #namePlayerOne {
     margin: 5px;
-    color: #A11958;
+    color:#121212 ;
     text-align: center;
 }
 
 #namePlayerTwo {
     margin: 5px;
-    color:  #015f3a  ;
+    color: #121212;
     text-align: center;
 }
 
 .nameField {
-    background-color: #00f0a4 ;
+    background-color: #BB86FC ;
     border: none;
     font-size: 10px;
     font-family: 'Press Start 2P', cursive;
@@ -106,12 +111,11 @@ button.startButton {
 
 .labelName {
     padding-left: 10px;
-    color: #f72d8b;
+    color: #fa7100;
 }
 
 #submitButton {
-    width: 90%;
-    background-color:#00f0a4;
+    background-color:#BB86FC;
     color: white;
     border: none;
     font-family: 'Fugaz One', cursive;
@@ -173,9 +177,69 @@ button.startButton {
   }
 
   #playerOnePlate {
-      background-color: #A11958;
+      background-color: #fa7100;
+      font-size: 30px;
   }
 
   #playerTwoPlate {
-      background-color:#015f3a;
+      background-color:#fbc10f;
+      font-size: 30px;
   }
+
+  #winnerArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6200EE;
+    width: 300px;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
+
+
+  #lineOne {
+      font-family: 'Fugaz One', cursive;
+      font-size: 20px;
+      text-align: center;
+      color: #BB86FC;
+
+
+  }
+
+  #lineTwo {
+    font-family: 'Fugaz One', cursive;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+}
+
+#lineOneTie {
+    font-family: 'Fugaz One', cursive;
+    font-size: 40px;
+    text-align: center;
+    color: #BB86FC;
+}
+
+
+#restartButton {
+    margin: 8px;
+    width: 300px;
+    background-color:#BB86FC;
+    color: white;
+    border: none;
+    font-family: 'Fugaz One', cursive;
+    font-size: 25px;
+    height: 50px;
+}
+
+#newGameButton {
+    margin: 5px;
+    width: 300px;
+    background-color:#BB86FC;
+    color: white;
+    border: none;
+    font-family: 'Fugaz One', cursive;
+    font-size: 25px;
+    height: 50px;
+}
