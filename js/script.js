@@ -22,8 +22,6 @@ const startGame = (function () {
         adversaryDiv.textContent = "";
         const containerForm = document.createElement('div');
         containerForm.setAttribute('id', 'containerForm');
-        //document.body.insertBefore(containerForm, boardArea);
-        //document.body.append(containerForm);
         adversaryDiv.style.gridTemplateColumns = '1fr';
         adversaryDiv.appendChild(containerForm);
         
@@ -50,8 +48,7 @@ const startGame = (function () {
         namePlayerOne.setAttribute('maxLength', '8');
         namePlayerOne.required = true;
         containerNamePlayerOne.appendChild(namePlayerOne);
-        //const playerOne = namePlayerOne.value;
-        //const namePlayerOne = playerOne.value;
+
 
         const containerNamePlayerTwo = document.createElement('div');
         containerNamePlayerTwo.setAttribute('class', 'containerInputs');
@@ -71,8 +68,7 @@ const startGame = (function () {
         namePlayerTwo.setAttribute('maxLength', '8');
         namePlayerTwo.required = true;
         containerNamePlayerTwo.appendChild(namePlayerTwo);
-        //const playerTwo = namePlayerTwo.value;
-        //const namePlayerTwo = playerTwo.value;
+
 
         const submitButtonContainer = document.createElement('div');
         submitButtonContainer.setAttribute('class', 'submit_button');
@@ -100,6 +96,10 @@ const startGame = (function () {
         function closeAdversaryDiv() {
             adversaryDiv.remove();
             cancelButton.remove();
+           
+            playButton.textContent = 'START';
+            playButton.removeAttribute('style');
+            iniatiateGame();
         }
 
 

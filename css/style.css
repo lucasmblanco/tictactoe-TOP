@@ -80,11 +80,11 @@ button.startButton {
     height: 100%;
 }
 
-#playersInfo {
-    height: 100%;
-}
+
 
 .containerInputs {
+    display: flex;
+    flex-direction: row;
     height: 25px;
     line-height: 35px;
     font-size: 10px;
@@ -107,6 +107,8 @@ button.startButton {
     border: none;
     font-size: 10px;
     font-family: 'Press Start 2P', cursive;
+    height: 20px;
+    border-radius: 20px;
 }
 
 .labelName {
@@ -121,7 +123,7 @@ button.startButton {
     font-family: 'Fugaz One', cursive;
     font-size: 25px;
     border-radius: 20px;
-    height: 50px;
+    padding: 6px;
 }
 
 #cancelButtonArea {
