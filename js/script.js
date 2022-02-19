@@ -560,7 +560,14 @@ const gameFlow = function () {
             }
             gameBoard.boardConstruction();
             gameFlow.playerOnePlays();
+
+            const startButtonText = document.querySelector('.startButton');
+            startButtonText.textContent = `${startGame.newPlayerOne.name} IS PLAYING`; 
+            startButtonText.style.fontSize = '20px';
+            startButtonText.style.color = '#BB86FC ';
         }
+
+       
 
     }
 

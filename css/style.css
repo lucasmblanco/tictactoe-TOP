@@ -123,7 +123,7 @@ button.startButton {
     font-family: 'Fugaz One', cursive;
     font-size: 25px;
     border-radius: 20px;
-    padding: 6px;
+    margin: 5px;
 }
 
 #cancelButtonArea {
