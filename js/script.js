@@ -168,25 +168,10 @@ const startGame = (function () {
 })();
 
 
-//startGame.creatingBoardArea();
-
 const gameBoard = (function () {
     
     const tilesContent = []; 
 
-
-    /*
-    function boardConstruction() {
-    const boardArea = document.querySelector('#boardArea');
-     for(let i = 0; i < 9; i++) {
-       const board = document.createElement('div');
-        boardArea.appendChild(board);
-        board.setAttribute('class', 'board');
-        boardArea.style.backgroundColor = 'black';
-        tilesContent.push(board);
-        }
-    }
-*/
     function boardConstruction() {
         tilesContent.length = 0;
         const board = document.querySelectorAll('.board')
@@ -242,6 +227,7 @@ const gameFlow = function () {
 
     const tieArray = []; 
     const checkingBoardArea = document.querySelector('#boardArea');
+    const startButtonText = document.querySelector('.startButton');
       
     const winnersIndex = [
       [0,1,2], 
@@ -298,7 +284,7 @@ const gameFlow = function () {
 
 
 
-            const startButtonText = document.querySelector('.startButton');
+            
             startButtonText.textContent = '(─‿‿─)'; 
             startButtonText.style.fontSize = '20px';
             startButtonText.style.color = 'white';
@@ -326,7 +312,7 @@ const gameFlow = function () {
             winnerArea.appendChild(lineOne);
             winnerArea.appendChild(lineTwo);
 
-            const startButtonText = document.querySelector('.startButton');
+            
             startButtonText.textContent = '(─‿‿─)'; 
             startButtonText.style.fontSize = '20px';
             startButtonText.style.color = 'white';
@@ -456,12 +442,12 @@ const gameFlow = function () {
 
     function playerOneSymbol(e) {
 
-        const startButtonText = document.querySelector('.startButton');
+        if(e.target.classList.contains('playerTwo') || e.target.classList.contains('playerOne') ) return;
         startButtonText.textContent = `${startGame.newPlayerTwo.name} IS PLAYING`; 
         startButtonText.style.fontSize = '20px';
         startButtonText.style.color = '#BB86FC';
 
-        if(e.target.classList.contains('playerTwo')) return;
+      
         e.target.textContent = startGame.newPlayerOne.symbol;
         e.target.classList.add('playerOne');
         e.target.classList.add('playerOneColor');
@@ -484,15 +470,15 @@ const gameFlow = function () {
     }
 
     function playerTwoSymbol(e){
-        const startButtonText = document.querySelector('.startButton');
+        if(e.target.classList.contains('playerOne') || e.target.classList.contains('playerTwo')) return;
         startButtonText.textContent = `${startGame.newPlayerOne.name} IS PLAYING`; 
         startButtonText.style.fontSize = '20px';
         startButtonText.style.color = '#BB86FC ';
 
-        if(e.target.classList.contains('playerOne')) return;
+        
         e.target.textContent = startGame.newPlayerTwo.symbol;
         e.target.classList.add('playerTwo');
-         e.target.classList.add('playerTwoColor');
+        e.target.classList.add('playerTwoColor');
         
         tieArray.push('O'); 
         checkGameStatus();
@@ -520,7 +506,7 @@ const gameFlow = function () {
         winnerArea.appendChild(lineOne);
     
 
-        const startButtonText = document.querySelector('.startButton');
+        
         startButtonText.textContent = '(︶︹︺)'; 
         startButtonText.style.fontSize = '20px';
         startButtonText.style.color = 'white'; 
@@ -561,10 +547,10 @@ const gameFlow = function () {
             gameBoard.boardConstruction();
             gameFlow.playerOnePlays();
 
-            const startButtonText = document.querySelector('.startButton');
+          
             startButtonText.textContent = `${startGame.newPlayerOne.name} IS PLAYING`; 
             startButtonText.style.fontSize = '20px';
-            startButtonText.style.color = '#BB86FC ';
+            startButtonText.style.color = '#BB86FC';
         }
 
        
